@@ -1,0 +1,25 @@
+{
+  "name": "違和感メモ",
+  "short_name": "違和感メモ",
+  "description": "あとから整理するための事実メモを短時間で残せるPWAアプリです。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fbf7f0",
+  "theme_color": "#f4eadc",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='42' fill='%23f4eadc'/%3E%3Crect x='45' y='36' width='102' height='120' rx='18' fill='%23fffdf9' stroke='%238f6b4f' stroke-width='8'/%3E%3Cpath d='M68 73h56M68 96h56M68 119h36' stroke='%238f6b4f' stroke-width='10' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23f4eadc'/%3E%3Crect x='120' y='92' width='272' height='328' rx='44' fill='%23fffdf9' stroke='%238f6b4f' stroke-width='22'/%3E%3Cpath d='M180 195h152M180 256h152M180 317h96' stroke='%238f6b4f' stroke-width='28' stroke-linecap='round'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
