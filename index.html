@@ -846,6 +846,32 @@
       return dateText + " " + timeText;
     }
 
+    function formatIsoDateTime(value) {
+      if (!value) {
+        return "不明";
+      }
+
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) {
+        return "不明";
+      }
+
+      const parts = new Intl.DateTimeFormat("ja-JP", {
+        timeZone: "Asia/Tokyo",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false
+      }).formatToParts(date).reduce((acc, part) => {
+        acc[part.type] = part.value;
+        return acc;
+      }, {});
+
+      return parts.year + "/" + parts.month + "/" + parts.day + " " + parts.hour + ":" + parts.minute;
+    }
+
     function buildCheckboxes(container, name, options) {
       container.innerHTML = options.map((option, index) => {
         const id = name + "-" + index;
@@ -1078,7 +1104,7 @@
           </div>
           <div class="detail-item">
             <p class="detail-label">作成・更新</p>
-            ${detailValue("作成: " + (record.createdAt || "不明") + "\n更新: " + (record.updatedAt || "不明"))}
+            ${detailValue("作成：" + formatIsoDateTime(record.createdAt) + "\n更新：" + formatIsoDateTime(record.updatedAt))}
           </div>
         </div>
         <div class="detail-actions">
