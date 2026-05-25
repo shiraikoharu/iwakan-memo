@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="ja">
 <head>
   <meta charset="utf-8">
@@ -487,6 +487,18 @@
       gap: 10px;
     }
 
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
     .detail-card {
       padding: 18px;
     }
@@ -691,13 +703,14 @@
       <p class="list-description">カードをタップすると詳細を見ることができ、編集や削除もできます。</p>
       <div class="backup-card" aria-labelledby="backupTitle">
         <h3 class="backup-title" id="backupTitle">バックアップ</h3>
-        <p class="backup-text">このアプリの記録は、この端末・このブラウザ内に保存されます。端末変更、ブラウザのデータ削除、PWAの不具合などで記録が消えてしまう可能性があります。記録を失わないために、必ず定期的にバックアップを保存してください。</p>
+        <p class="backup-text">記録を保存したり復元できます。
+大切な記録がなくならないように、定期的に保存をお願いします。</p>
         <div class="backup-actions">
           <button class="button button-secondary" type="button" id="exportBackupButton">バックアップを保存</button>
-          <button class="button button-plain" type="button" id="importBackupButton">バックアップを読み込む</button>
+          <label class="button button-plain" for="backupFileInput" id="importBackupButton" role="button" tabindex="0">バックアップを復元</label>
         </div>
         <p class="message" id="backupMessage" role="status" aria-live="polite"></p>
-        <input type="file" id="backupFileInput" accept=".json,application/json" hidden>
+        <input class="visually-hidden" type="file" id="backupFileInput" accept=".json,application/json">
       </div>
       <div class="record-list" id="recordList"></div>
     </section>
@@ -974,7 +987,7 @@
           }
 
           const nextRecords = parsed.records.map(normalizeRecord);
-          const confirmed = window.confirm("読み込んだバックアップで現在の記録を置き換えますか？現在の記録は上書きされます。");
+          const confirmed = window.confirm("このバックアップから復元しますか？現在の記録は上書きされます。");
           if (!confirmed) {
             return;
           }
@@ -982,16 +995,16 @@
           saveRecords(nextRecords);
           renderList();
           resetForm();
-          showBackupStatus("バックアップを読み込みました。");
+          showBackupStatus("バックアップを復元しました。");
         } catch (error) {
-          showBackupStatus("バックアップを読み込めませんでした。");
+          showBackupStatus("バックアップを復元できませんでした。");
         } finally {
           backupFileInput.value = "";
         }
       };
       reader.onerror = () => {
         backupFileInput.value = "";
-        showBackupStatus("バックアップを読み込めませんでした。");
+        showBackupStatus("バックアップを復元できませんでした。");
       };
       reader.readAsText(file);
     }
@@ -1212,8 +1225,11 @@
 
     exportBackupButton.addEventListener("click", exportBackup);
 
-    importBackupButton.addEventListener("click", () => {
-      backupFileInput.click();
+    importBackupButton.addEventListener("keydown", event => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        backupFileInput.click();
+      }
     });
 
     backupFileInput.addEventListener("change", event => {
