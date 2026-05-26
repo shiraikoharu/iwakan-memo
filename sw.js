@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = "iwakan-memo-v7";
+﻿const CACHE_NAME = "iwakan-memo-v8";
 const APP_SHELL = [
   "./",
   "./index.html",
@@ -31,16 +31,37 @@ self.addEventListener("fetch", event => {
     return;
   }
 
+  const request = event.request;
+
+  if (request.mode === "navigate" || request.destination === "document") {
+    event.respondWith(
+      fetch(request)
+        .then(networkResponse => {
+          const responseClone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(request, responseClone);
+          });
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(request).then(cachedResponse => {
+            return cachedResponse || caches.match("./index.html");
+          });
+        })
+    );
+    return;
+  }
+
   event.respondWith(
-    caches.match(event.request).then(cachedResponse => {
+    caches.match(request).then(cachedResponse => {
       if (cachedResponse) {
         return cachedResponse;
       }
 
-      return fetch(event.request).then(networkResponse => {
+      return fetch(request).then(networkResponse => {
         const responseClone = networkResponse.clone();
         caches.open(CACHE_NAME).then(cache => {
-          cache.put(event.request, responseClone);
+          cache.put(request, responseClone);
         });
         return networkResponse;
       });
