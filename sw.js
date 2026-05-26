@@ -1,4 +1,4 @@
-const CACHE_NAME = "iwakan-memo-v5";
+﻿const CACHE_NAME = "iwakan-memo-v7";
 const APP_SHELL = [
   "./",
   "./index.html",
