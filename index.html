@@ -696,11 +696,6 @@
     </section>
 
     <section class="screen" id="listScreen" aria-labelledby="listTitle">
-      <div class="list-head">
-        <h2 class="section-title" id="listTitle">記録一覧</h2>
-        <span class="count" id="recordCount"></span>
-      </div>
-      <p class="list-description">カードをタップすると詳細を見ることができ、編集や削除もできます。</p>
       <div class="backup-card" aria-labelledby="backupTitle">
         <h3 class="backup-title" id="backupTitle">バックアップ</h3>
         <p class="backup-text">記録を保存したり復元できます。
@@ -712,6 +707,11 @@
         <p class="message" id="backupMessage" role="status" aria-live="polite"></p>
         <input class="visually-hidden" type="file" id="backupFileInput" accept=".json,application/json">
       </div>
+      <div class="list-head">
+        <h2 class="section-title" id="listTitle">記録一覧</h2>
+        <span class="count" id="recordCount"></span>
+      </div>
+      <p class="list-description">カードをタップすると詳細を見ることができ、編集や削除もできます。</p>
       <div class="record-list" id="recordList"></div>
     </section>
 
